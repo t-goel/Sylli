@@ -5,7 +5,7 @@ codeuri = "/Users/tanmaygoel/CS/Sylli/backend"
 runtime = "python3.13"
 architecture = "arm64"
 handler = "app.lambda_handler"
-manifest_hash = "e63ac227975a4a059eb9aceb32964345"
+manifest_hash = "b1732dde6cf628cdf79b13cbc7bf7bec"
 packagetype = "Zip"
 functions = ["HelloWorldFunction"]
 

@@ -2,3 +2,4 @@ fastapi
 mangum
 python-multipart
 uvicorn
+boto3

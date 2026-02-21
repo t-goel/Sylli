@@ -22,12 +22,23 @@ Resources:
       Runtime: python3.13
       Architectures:
         - arm64
+      Environment:
+        Variables:
+          SYLLABUS_BUCKET: sylli-syllabus-bucket
+      Policies:
+        - S3WritePolicy:
+            BucketName: sylli-syllabus-bucket
       Events:
         HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api
           Properties:
             Path: /{proxy+}
             Method: any
+
+  SyllabusBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: sylli-syllabus-bucket
 
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
