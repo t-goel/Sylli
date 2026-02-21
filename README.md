@@ -50,7 +50,7 @@ To build a scalable and cost-effective application, the architecture relies heav
 | :--- | :--- | :--- |
 | **Frontend UI** | React or Next.js (JavaScript/TS) | Creates the interactive three-pane dashboard. Hosted on **AWS Amplify**. |
 | **Backend API** | Python (FastAPI) via **AWS Lambda** | Handles routing, auth, and business logic without managing servers. Exposed via **Amazon API Gateway**. |
-| **Raw Storage** | **Amazon S3** | The landing zone for all uploaded PDFs, PPTXs, and syllabus images. |
+| **Raw Storage** | **Amazon S3** | The landing zone for all uploaded course materials. Organized into `syllabus/` (for syllabus files) and `documents/` (for slides, readings, etc.) subfolders. |
 | **Database** | **Amazon DynamoDB** | Stores the metadata mapping (User IDs -> Courses -> Document Tags -> Chat History). |
 | **Embedding & Search** | **Amazon Bedrock Knowledge Bases** | Automatically chunks S3 documents, converts them to vectors (Titan Embeddings), and stores them in **Amazon OpenSearch Serverless**. |
 | **AI / Brain** | **Amazon Bedrock (Claude 3.5 Sonnet)** | Handles the heavy lifting: syllabus mapping, multimodal image processing (handling poorly scanned readings or visual charts), and answering chat queries. |
