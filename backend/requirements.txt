@@ -3,3 +3,5 @@ mangum
 python-multipart
 uvicorn
 boto3
+PyJWT
+passlib[bcrypt]

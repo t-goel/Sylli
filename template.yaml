@@ -26,6 +26,8 @@ Resources:
         Variables:
           SYLLABUS_BUCKET: sylli-syllabus-bucket
           SYLLABUS_TABLE: sylli-syllabus-table
+          USERS_TABLE: sylli-users-table
+          JWT_SECRET: "dev-secret-replace-for-prod"  # TODO: use SSM for prod
       Policies:
         - S3WritePolicy:
             BucketName: sylli-syllabus-bucket
@@ -35,6 +37,10 @@ Resources:
             TableName: sylli-syllabus-table
         - DynamoDBReadPolicy:
             TableName: sylli-syllabus-table
+        - DynamoDBWritePolicy:
+            TableName: sylli-users-table
+        - DynamoDBReadPolicy:
+            TableName: sylli-users-table
         - Statement:
             - Effect: Allow
               Action:
@@ -57,6 +63,18 @@ Resources:
           AttributeType: S
       KeySchema:
         - AttributeName: syllabus_id
+          KeyType: HASH
+
+  UsersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: sylli-users-table
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: username
+          AttributeType: S
+      KeySchema:
+        - AttributeName: username
           KeyType: HASH
 
   SyllabusBucket:
