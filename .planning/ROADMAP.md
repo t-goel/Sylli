@@ -12,7 +12,7 @@ Sylli is a brownfield project with a working syllabus-parsing backend. The work 
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - Fix existing bugs and stabilize the backend before any new features land
+- [x] **Phase 1: Foundation** - Fix existing bugs and stabilize the backend before any new features land (completed 2026-03-14)
 - [ ] **Phase 2: Auth and Syllabus** - Gate data behind user accounts and deliver the first UI milestone
 - [ ] **Phase 3: Materials and Library** - Upload course materials with async embedding and display a chronological navigator
 - [ ] **Phase 4: AI Tutor** - RAG pipeline with week-aware context and inline source citations
@@ -84,7 +84,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/2 | Not started | - |
+| 1. Foundation | 2/2 | Complete   | 2026-03-14 |
 | 2. Auth and Syllabus | 0/TBD | Not started | - |
 | 3. Materials and Library | 0/TBD | Not started | - |
 | 4. AI Tutor | 0/TBD | Not started | - |
