@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 02-auth-and-syllabus-04-PLAN.md
-last_updated: "2026-03-14T20:00:09.136Z"
+stopped_at: Completed 02-auth-and-syllabus-02-PLAN.md
+last_updated: "2026-03-14T20:02:57.288Z"
 last_activity: 2026-03-14 — Roadmap created, phases derived from requirements
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 7
-  completed_plans: 5
+  completed_plans: 6
   percent: 0
 ---
 
@@ -55,6 +55,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02-auth-and-syllabus P03 | 3 | 2 tasks | 8 files |
 | Phase 02-auth-and-syllabus P01 | 14 | 2 tasks | 9 files |
 | Phase 02-auth-and-syllabus P04 | 1min | 2 tasks | 4 files |
+| Phase 02-auth-and-syllabus P02 | 11 | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -77,6 +78,8 @@ Recent decisions affecting current work:
 - [Phase 02-auth-and-syllabus]: JWT payload contains both user_id (UUID partition key) and username (display) — avoids extra DynamoDB lookup in routes
 - [Phase 02-auth-and-syllabus]: Raw fetch used in SyllabusUpload instead of apiFetch — apiFetch sets Content-Type: application/json which breaks multipart/form-data boundary
 - [Phase 02-auth-and-syllabus]: Auth guard implemented as layout.tsx using AuthContext token state directly — consistent with client-side auth approach
+- [Phase 02-auth-and-syllabus]: HTTPBearer(auto_error=False) in middleware/auth.py — default returns 403 for missing credentials; explicit 401 raise ensures consistent auth error codes matching must_haves spec
+- [Phase 02-auth-and-syllabus]: dynamo_service.get_syllabus returns None on ownership mismatch — anti-enumeration pattern prevents revealing whether a syllabus_id exists to unauthorized users
 
 ### Pending Todos
 
@@ -90,6 +93,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-14T20:00:09.133Z
-Stopped at: Completed 02-auth-and-syllabus-04-PLAN.md
+Last session: 2026-03-14T20:02:57.284Z
+Stopped at: Completed 02-auth-and-syllabus-02-PLAN.md
 Resume file: None
