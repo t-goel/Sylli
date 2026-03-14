@@ -44,7 +44,14 @@ Plans:
   3. A user can log out and log back in with the same username and PIN to reach their data
   4. A logged-in user can upload a course syllabus PDF through the Next.js UI
   5. After upload, the user can see their course's week/unit timeline displayed from the parsed week_map
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Backend auth foundation: users table, PyJWT + passlib, auth service, JWT middleware (AUTH-01, AUTH-02, AUTH-03)
+- [ ] 02-02-PLAN.md — Auth API endpoints + syllabus user_id enforcement + CORS (AUTH-01, AUTH-02, AUTH-03, SYLL-01)
+- [ ] 02-03-PLAN.md — Next.js scaffold + AuthContext + login/register page (AUTH-01, AUTH-03)
+- [ ] 02-04-PLAN.md — Dashboard + syllabus upload component + week timeline (SYLL-01, SYLL-02)
+- [ ] 02-05-PLAN.md — UAT checkpoint: verify all 5 Phase 2 success criteria (AUTH-01, AUTH-02, AUTH-03, SYLL-01, SYLL-02)
 
 ### Phase 3: Materials and Library
 **Goal**: Students can upload lecture slides and notes, have them assigned to a week automatically, and browse everything in a chronological course view
@@ -85,7 +92,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete   | 2026-03-14 |
-| 2. Auth and Syllabus | 0/TBD | Not started | - |
+| 2. Auth and Syllabus | 0/5 | Not started | - |
 | 3. Materials and Library | 0/TBD | Not started | - |
 | 4. AI Tutor | 0/TBD | Not started | - |
 | 5. Quiz Generator | 0/TBD | Not started | - |
