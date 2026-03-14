@@ -13,9 +13,9 @@
 
 ### Auth
 
-- [ ] **AUTH-01**: User can create a session by entering a username and PIN
+- [x] **AUTH-01**: User can create a session by entering a username and PIN
 - [ ] **AUTH-02**: User's data (syllabus, materials, chat history) is scoped to their username
-- [ ] **AUTH-03**: User can log out and return with the same username + PIN to access their data
+- [x] **AUTH-03**: User can log out and return with the same username + PIN to access their data
 
 ### Syllabus
 
@@ -88,9 +88,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FOUND-01 | Phase 1 | Complete |
 | FOUND-02 | Phase 1 | Complete |
 | FOUND-03 | Phase 1 | Complete |
-| AUTH-01 | Phase 2 | Pending |
+| AUTH-01 | Phase 2 | Complete |
 | AUTH-02 | Phase 2 | Pending |
-| AUTH-03 | Phase 2 | Pending |
+| AUTH-03 | Phase 2 | Complete |
 | SYLL-01 | Phase 2 | Pending |
 | SYLL-02 | Phase 2 | Pending |
 | MAT-01 | Phase 3 | Pending |

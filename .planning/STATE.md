@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 01-foundation-02-PLAN.md
-last_updated: "2026-03-14T19:21:06.553Z"
+stopped_at: Completed 02-auth-and-syllabus-03-PLAN.md
+last_updated: "2026-03-14T19:55:15.399Z"
 last_activity: 2026-03-14 — Roadmap created, phases derived from requirements
 progress:
   total_phases: 5
   completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
+  total_plans: 7
+  completed_plans: 3
   percent: 0
 ---
 
@@ -52,6 +52,7 @@ Progress: [░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 01-foundation P01 | 8 | 2 tasks | 2 files |
 | Phase 01-foundation P02 | 1 | 2 tasks | 4 files |
+| Phase 02-auth-and-syllabus P03 | 3 | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -67,6 +68,8 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: Bedrock standard retry mode (not legacy) chosen — only standard mode retries ReadTimeoutError for Lambda timeout protection
 - [Phase 01-foundation]: Service re-raises all Bedrock exceptions; router owns the generic HTTP 500 response — centralized error handling pattern
 - [Phase 01-foundation]: SyllabusBucket and SyllabusTable logical IDs left unchanged — renaming stateful CloudFormation resources triggers deletion + recreation (data loss)
+- [Phase 02-auth-and-syllabus]: Decode JWT client-side via atob on base64url payload segment — avoids adding jwt library dependency to Next.js frontend
+- [Phase 02-auth-and-syllabus]: NEXT_PUBLIC_API_URL defaults to http://localhost:3001 (SAM local on 3001 to avoid port 3000 conflict with Next.js dev server)
 
 ### Pending Todos
 
@@ -80,6 +83,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-14T19:18:57.164Z
-Stopped at: Completed 01-foundation-02-PLAN.md
+Last session: 2026-03-14T19:55:15.395Z
+Stopped at: Completed 02-auth-and-syllabus-03-PLAN.md
 Resume file: None
