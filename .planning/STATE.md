@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 02-auth-and-syllabus-03-PLAN.md
-last_updated: "2026-03-14T19:55:15.399Z"
+stopped_at: Completed 02-auth-and-syllabus-01-PLAN.md
+last_updated: "2026-03-14T19:57:07.534Z"
 last_activity: 2026-03-14 — Roadmap created, phases derived from requirements
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 7
-  completed_plans: 3
+  completed_plans: 4
   percent: 0
 ---
 
@@ -53,6 +53,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-foundation P01 | 8 | 2 tasks | 2 files |
 | Phase 01-foundation P02 | 1 | 2 tasks | 4 files |
 | Phase 02-auth-and-syllabus P03 | 3 | 2 tasks | 8 files |
+| Phase 02-auth-and-syllabus P01 | 14 | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -70,6 +71,9 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: SyllabusBucket and SyllabusTable logical IDs left unchanged — renaming stateful CloudFormation resources triggers deletion + recreation (data loss)
 - [Phase 02-auth-and-syllabus]: Decode JWT client-side via atob on base64url payload segment — avoids adding jwt library dependency to Next.js frontend
 - [Phase 02-auth-and-syllabus]: NEXT_PUBLIC_API_URL defaults to http://localhost:3001 (SAM local on 3001 to avoid port 3000 conflict with Next.js dev server)
+- [Phase 02-auth-and-syllabus]: bcrypt<4.0 pinned in requirements.txt — passlib 1.7.4 incompatible with bcrypt 5.x due to password-length check in detect_wrap_bug
+- [Phase 02-auth-and-syllabus]: login_user returns None on bad credentials (not exception) — avoids caller needing try/except for normal invalid login flow
+- [Phase 02-auth-and-syllabus]: JWT payload contains both user_id (UUID partition key) and username (display) — avoids extra DynamoDB lookup in routes
 
 ### Pending Todos
 
@@ -83,6 +87,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-14T19:55:15.395Z
-Stopped at: Completed 02-auth-and-syllabus-03-PLAN.md
+Last session: 2026-03-14T19:57:07.531Z
+Stopped at: Completed 02-auth-and-syllabus-01-PLAN.md
 Resume file: None
