@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 02-auth-and-syllabus-02-PLAN.md
-last_updated: "2026-03-14T20:02:57.288Z"
+stopped_at: Completed 02-auth-and-syllabus-05-PLAN.md
+last_updated: "2026-03-14T20:07:49.790Z"
 last_activity: 2026-03-14 — Roadmap created, phases derived from requirements
 progress:
   total_phases: 5
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 7
-  completed_plans: 6
+  completed_plans: 7
   percent: 0
 ---
 
@@ -56,6 +56,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02-auth-and-syllabus P01 | 14 | 2 tasks | 9 files |
 | Phase 02-auth-and-syllabus P04 | 1min | 2 tasks | 4 files |
 | Phase 02-auth-and-syllabus P02 | 11 | 2 tasks | 8 files |
+| Phase 02-auth-and-syllabus P05 | 3 | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -80,6 +81,8 @@ Recent decisions affecting current work:
 - [Phase 02-auth-and-syllabus]: Auth guard implemented as layout.tsx using AuthContext token state directly — consistent with client-side auth approach
 - [Phase 02-auth-and-syllabus]: HTTPBearer(auto_error=False) in middleware/auth.py — default returns 403 for missing credentials; explicit 401 raise ensures consistent auth error codes matching must_haves spec
 - [Phase 02-auth-and-syllabus]: dynamo_service.get_syllabus returns None on ownership mismatch — anti-enumeration pattern prevents revealing whether a syllabus_id exists to unauthorized users
+- [Phase 02-auth-and-syllabus]: UAT checkpoint auto-approved in auto-mode per auto_advance configuration — actual manual UAT verification deferred to live testing session with Docker running
+- [Phase 02-auth-and-syllabus]: .aws-sam/ added to .gitignore — SAM build artifacts contain platform-specific compiled binaries and must not be tracked in git
 
 ### Pending Todos
 
@@ -93,6 +96,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-14T20:02:57.284Z
-Stopped at: Completed 02-auth-and-syllabus-02-PLAN.md
+Last session: 2026-03-14T20:07:49.786Z
+Stopped at: Completed 02-auth-and-syllabus-05-PLAN.md
 Resume file: None
