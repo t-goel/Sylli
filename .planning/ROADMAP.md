@@ -28,7 +28,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   1. Uploading a real multi-page syllabus PDF does not return a 500 or expose raw error text — Bedrock JSON parse errors are caught and a clean error message is returned
   2. A large syllabus PDF that would previously cause a Lambda timeout completes without a silent kill — timeout and retry handling is in place on all Bedrock invocations
   3. The Lambda function, SAM template, and all project references are named `Sylli` (no remaining `HelloWorld` identifiers)
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Bedrock error handling and timeout/retry (FOUND-01, FOUND-02)
+- [ ] 01-02-PLAN.md — HelloWorld purge: rename template.yaml, update SPEC.md, delete dead files (FOUND-03)
 
 ### Phase 2: Auth and Syllabus
 **Goal**: Each student has a private account, and after logging in they can upload their course syllabus and see the parsed timeline
@@ -80,7 +84,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
+| 1. Foundation | 0/2 | Not started | - |
 | 2. Auth and Syllabus | 0/TBD | Not started | - |
 | 3. Materials and Library | 0/TBD | Not started | - |
 | 4. AI Tutor | 0/TBD | Not started | - |
