@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 01-foundation-01-01-PLAN.md
-last_updated: "2026-03-14T19:18:40.685Z"
+stopped_at: Completed 01-foundation-02-PLAN.md
+last_updated: "2026-03-14T19:18:57.168Z"
 last_activity: 2026-03-14 — Roadmap created, phases derived from requirements
 progress:
   total_phases: 5
@@ -51,6 +51,7 @@ Progress: [░░░░░░░░░░] 0%
 
 *Updated after each plan completion*
 | Phase 01-foundation P01 | 8 | 2 tasks | 2 files |
+| Phase 01-foundation P02 | 1 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -65,6 +66,7 @@ Recent decisions affecting current work:
 - [Roadmap]: Vector store decision (Pinecone vs S3 Vectors) deferred to Phase 3 planning — AWS-only constraint vs. cost tradeoff needs resolution before embedding pipeline is built
 - [Phase 01-foundation]: Bedrock standard retry mode (not legacy) chosen — only standard mode retries ReadTimeoutError for Lambda timeout protection
 - [Phase 01-foundation]: Service re-raises all Bedrock exceptions; router owns the generic HTTP 500 response — centralized error handling pattern
+- [Phase 01-foundation]: SyllabusBucket and SyllabusTable logical IDs left unchanged — renaming stateful CloudFormation resources triggers deletion + recreation (data loss)
 
 ### Pending Todos
 
@@ -78,6 +80,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-14T19:18:40.682Z
-Stopped at: Completed 01-foundation-01-01-PLAN.md
+Last session: 2026-03-14T19:18:57.164Z
+Stopped at: Completed 01-foundation-02-PLAN.md
 Resume file: None

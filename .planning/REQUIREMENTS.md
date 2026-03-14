@@ -9,7 +9,7 @@
 
 - [x] **FOUND-01**: Bedrock JSON parse errors are caught and handled gracefully — no raw crashes exposed to the client
 - [x] **FOUND-02**: Bedrock invocations have timeout and retry handling — no silent Lambda kills on real documents
-- [ ] **FOUND-03**: SAM template and Lambda function are renamed from HelloWorld to Sylli project naming
+- [x] **FOUND-03**: SAM template and Lambda function are renamed from HelloWorld to Sylli project naming
 
 ### Auth
 
@@ -87,7 +87,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | FOUND-01 | Phase 1 | Complete |
 | FOUND-02 | Phase 1 | Complete |
-| FOUND-03 | Phase 1 | Pending |
+| FOUND-03 | Phase 1 | Complete |
 | AUTH-01 | Phase 2 | Pending |
 | AUTH-02 | Phase 2 | Pending |
 | AUTH-03 | Phase 2 | Pending |
