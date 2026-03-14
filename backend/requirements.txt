@@ -5,3 +5,4 @@ uvicorn
 boto3
 PyJWT
 passlib[bcrypt]
+bcrypt<4.0
