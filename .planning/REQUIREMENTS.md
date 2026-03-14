@@ -19,8 +19,8 @@
 
 ### Syllabus
 
-- [ ] **SYLL-01**: User can upload a course syllabus PDF through the UI to initialize their course
-- [ ] **SYLL-02**: User can view the parsed week/unit timeline after syllabus upload
+- [x] **SYLL-01**: User can upload a course syllabus PDF through the UI to initialize their course
+- [x] **SYLL-02**: User can view the parsed week/unit timeline after syllabus upload
 
 ### Materials
 
@@ -91,8 +91,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | AUTH-01 | Phase 2 | Complete |
 | AUTH-02 | Phase 2 | Complete |
 | AUTH-03 | Phase 2 | Complete |
-| SYLL-01 | Phase 2 | Pending |
-| SYLL-02 | Phase 2 | Pending |
+| SYLL-01 | Phase 2 | Complete |
+| SYLL-02 | Phase 2 | Complete |
 | MAT-01 | Phase 3 | Pending |
 | MAT-02 | Phase 3 | Pending |
 | MAT-03 | Phase 3 | Pending |
