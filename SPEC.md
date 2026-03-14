@@ -86,7 +86,7 @@ Sylli is a Retrieval-Augmented Generation (RAG) study application that uses a "S
 
 | Resource | Logical ID | Config |
 |:---|:---|:---|
-| Lambda | `HelloWorldFunction` | Runtime: Python 3.13, Arch: ARM64, Timeout: 30s, Handler: `backend/app.lambda_handler` |
+| Lambda | `SylliFunction` | Runtime: Python 3.13, Arch: ARM64, Timeout: 30s, Handler: `backend/app.lambda_handler` |
 | API Gateway | (implicit from SAM `Api` event) | Route: `/{proxy+}`, Method: `ANY` |
 | S3 Bucket | `SyllabusBucket` | Name: `sylli-syllabus-bucket` |
 | DynamoDB Table | `SyllabusTable` | Name: `sylli-syllabus-table`, Key: `syllabus_id (S)`, Billing: PAY_PER_REQUEST |
