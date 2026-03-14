@@ -243,6 +243,9 @@ $RECYCLE.BIN/
 
 */build/*
 
+# SAM build artifacts
+.aws-sam/
+
 
 settings.local.json
 # End of https://www.gitignore.io/api/osx,linux,python,windows,pycharm,visualstudiocode
