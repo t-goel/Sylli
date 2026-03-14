@@ -13,7 +13,7 @@ async def upload_syllabus(file: UploadFile = File(...)):
         result = await upload_syllabus_to_s3(file)
         return result
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Failed to parse syllabus. Please try again.")
 
 
 @router.get("/syllabus/{syllabus_id}", tags=["syllabus"])
