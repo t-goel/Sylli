@@ -12,7 +12,7 @@ s3 = boto3.client("s3")
 BUCKET_NAME = os.getenv("SYLLABUS_BUCKET", "sylli-syllabus-bucket")
 
 
-async def upload_syllabus_to_s3(file: UploadFile) -> dict:
+async def upload_syllabus_to_s3(file: UploadFile, user_id: str) -> dict:
     """Upload syllabus to S3, parse it with Bedrock, store result in DynamoDB."""
     pdf_bytes = await file.read()
 
@@ -33,11 +33,12 @@ async def upload_syllabus_to_s3(file: UploadFile) -> dict:
         s3_key=s3_key,
         week_map=week_map,
         uploaded_at=uploaded_at,
+        user_id=user_id,
     )
 
     return {"syllabus_id": syllabus_id, "week_map": week_map}
 
 
-async def fetch_syllabus(syllabus_id: str) -> dict | None:
-    """Retrieve a previously parsed syllabus by ID."""
-    return get_syllabus(syllabus_id)
+async def fetch_syllabus(syllabus_id: str, user_id: str) -> dict | None:
+    """Retrieve a previously parsed syllabus by ID, scoped to the requesting user."""
+    return get_syllabus(syllabus_id, user_id=user_id)
