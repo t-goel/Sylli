@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Fix existing bugs and stabilize the backend before any new features land (completed 2026-03-14)
 - [x] **Phase 2: Auth and Syllabus** - Gate data behind user accounts and deliver the first UI milestone (completed 2026-03-14)
-- [x] **Phase 3: Materials and Library** - Upload course materials with async embedding and display a chronological navigator (completed 2026-03-15)
+- [ ] **Phase 3: Materials and Library** - Upload course materials with async embedding and display a chronological navigator
 - [ ] **Phase 4: AI Tutor** - RAG pipeline with week-aware context and inline source citations
 - [ ] **Phase 5: Quiz Generator** - On-demand quiz generation scoped to a unit or the full course
 
