@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
-from routers import health, syllabus, auth
+from routers import health, syllabus, auth, materials
 
 app = FastAPI(title="Sylli Backend", version="0.1.0")
 
@@ -16,6 +16,7 @@ app.add_middleware(
 app.include_router(health.router, prefix="/api/v1")
 app.include_router(syllabus.router, prefix="/api/v1")
 app.include_router(auth.router, prefix="/api/v1")
+app.include_router(materials.router, prefix="/api/v1")
 
 # Lambda handler for AWS execution
 lambda_handler = Mangum(app, api_gateway_base_path="/Prod")
