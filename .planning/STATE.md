@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 03-materials-and-library 03-03-PLAN.md
-last_updated: "2026-03-15T20:46:39.730Z"
+stopped_at: Completed 03-materials-and-library 03-04-PLAN.md
+last_updated: "2026-03-15T20:50:06.537Z"
 last_activity: 2026-03-14 — Phase 2 UAT approved, ready for Phase 3
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 12
-  completed_plans: 10
+  completed_plans: 11
   percent: 0
 ---
 
@@ -60,6 +60,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 03-materials-and-library P01 | 2 | 2 tasks | 2 files |
 | Phase 03-materials-and-library P02 | 2 | 2 tasks | 5 files |
 | Phase 03-materials-and-library P03 | 3 | 2 tasks | 4 files |
+| Phase 03-materials-and-library P04 | 2 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -93,6 +94,8 @@ Recent decisions affecting current work:
 - [Phase 03-materials-and-library]: EMBED_FUNCTION_NAME guard: Lambda invocation skipped when env var is empty — allows local dev without Lambda
 - [Phase 03-materials-and-library]: s3vectors client initialized lazily via _get_s3v() — defers import-time UnknownServiceError if bundled boto3 version is wrong
 - [Phase 03-materials-and-library]: try/except covers entire lambda_handler body — any failure sets embed_status='error'; frontend poll always terminates
+- [Phase 03-materials-and-library]: Dynamic import of apiFetch inside setInterval callback — avoids stale closure issues with polling
+- [Phase 03-materials-and-library]: MaterialLibrary receives materials as prop with dashboard owning fetchMaterials — single source of truth, avoids duplicate fetches
 
 ### Pending Todos
 
@@ -106,6 +109,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T20:46:39.727Z
-Stopped at: Completed 03-materials-and-library 03-03-PLAN.md
+Last session: 2026-03-15T20:50:06.534Z
+Stopped at: Completed 03-materials-and-library 03-04-PLAN.md
 Resume file: None
