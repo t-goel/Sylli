@@ -100,6 +100,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete   | 2026-03-14 |
 | 2. Auth and Syllabus | 5/5 | Complete | 2026-03-14 |
-| 3. Materials and Library | 1/5 | In Progress|  |
+| 3. Materials and Library | 3/5 | In Progress|  |
 | 4. AI Tutor | 0/TBD | Not started | - |
 | 5. Quiz Generator | 0/TBD | Not started | - |

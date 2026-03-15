@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 03-materials-and-library 03-01-PLAN.md
-last_updated: "2026-03-15T20:42:14.775Z"
+stopped_at: Completed 03-materials-and-library 03-02-PLAN.md
+last_updated: "2026-03-15T20:46:19.282Z"
 last_activity: 2026-03-14 — Phase 2 UAT approved, ready for Phase 3
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 12
-  completed_plans: 8
+  completed_plans: 10
   percent: 0
 ---
 
@@ -58,6 +58,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02-auth-and-syllabus P02 | 11 | 2 tasks | 8 files |
 | Phase 02-auth-and-syllabus P05 | 3 | 2 tasks | 1 files |
 | Phase 03-materials-and-library P01 | 2 | 2 tasks | 2 files |
+| Phase 03-materials-and-library P02 | 2 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -87,6 +88,8 @@ Recent decisions affecting current work:
 - [Phase 03-materials-and-library]: boto3 pinned >=1.39.5 in requirements.txt — Lambda runtime ships older boto3 without s3vectors client; SAM must bundle it
 - [Phase 03-materials-and-library]: EmbedWorkerFunction is a separate Lambda (300s timeout) for async embedding work; API Gateway 29s limit prevents inline processing
 - [Phase 03-materials-and-library]: MaterialsTable user_id-index GSI declared at table creation — DynamoDB GSIs cannot be added post-creation without table recreation
+- [Phase 03-materials-and-library]: suggest_week_for_material catches all exceptions and returns week 1 — upload success is more important than AI suggestion accuracy
+- [Phase 03-materials-and-library]: EMBED_FUNCTION_NAME guard: Lambda invocation skipped when env var is empty — allows local dev without Lambda
 
 ### Pending Todos
 
@@ -100,6 +103,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T20:42:14.772Z
-Stopped at: Completed 03-materials-and-library 03-01-PLAN.md
+Last session: 2026-03-15T20:46:19.279Z
+Stopped at: Completed 03-materials-and-library 03-02-PLAN.md
 Resume file: None

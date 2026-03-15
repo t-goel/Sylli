@@ -25,15 +25,15 @@
 ### Materials
 
 - [x] **MAT-01**: User can upload PDF or PPTX files as course materials
-- [ ] **MAT-02**: AI suggests which unit/week an uploaded material belongs to (based on parsed syllabus)
-- [ ] **MAT-03**: User can confirm or override the AI-suggested unit/week assignment for each material
+- [x] **MAT-02**: AI suggests which unit/week an uploaded material belongs to (based on parsed syllabus)
+- [x] **MAT-03**: User can confirm or override the AI-suggested unit/week assignment for each material
 - [x] **MAT-04**: Uploaded materials are chunked and embedded asynchronously (non-blocking upload flow)
 - [x] **MAT-05**: Embeddings are stored with user_id and unit/week metadata for filtered retrieval
 
 ### Library Navigator
 
-- [ ] **LIB-01**: User can view all uploaded materials organized by unit/week in a chronological timeline
-- [ ] **LIB-02**: User can click a material in the library to view the original file
+- [x] **LIB-01**: User can view all uploaded materials organized by unit/week in a chronological timeline
+- [x] **LIB-02**: User can click a material in the library to view the original file
 
 ### AI Tutor
 
@@ -94,12 +94,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SYLL-01 | Phase 2 | Complete |
 | SYLL-02 | Phase 2 | Complete |
 | MAT-01 | Phase 3 | Complete |
-| MAT-02 | Phase 3 | Pending |
-| MAT-03 | Phase 3 | Pending |
+| MAT-02 | Phase 3 | Complete |
+| MAT-03 | Phase 3 | Complete |
 | MAT-04 | Phase 3 | Complete |
 | MAT-05 | Phase 3 | Complete |
-| LIB-01 | Phase 3 | Pending |
-| LIB-02 | Phase 3 | Pending |
+| LIB-01 | Phase 3 | Complete |
+| LIB-02 | Phase 3 | Complete |
 | TUTOR-01 | Phase 4 | Pending |
 | TUTOR-02 | Phase 4 | Pending |
 | QUIZ-01 | Phase 5 | Pending |
