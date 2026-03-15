@@ -32,6 +32,9 @@ Resources:
           SYLLABUS_TABLE: sylli-syllabus-table
           USERS_TABLE: sylli-users-table
           JWT_SECRET: "dev-secret-replace-for-prod"  # TODO: use SSM for prod
+          MATERIALS_BUCKET: sylli-materials-bucket
+          MATERIALS_TABLE: sylli-materials-table
+          EMBED_FUNCTION_NAME: !Ref EmbedWorkerFunction
       Policies:
         - S3WritePolicy:
             BucketName: sylli-syllabus-bucket
@@ -50,6 +53,19 @@ Resources:
               Action:
                 - bedrock:InvokeModel
               Resource: "*"
+        - S3WritePolicy:
+            BucketName: sylli-materials-bucket
+        - S3ReadPolicy:
+            BucketName: sylli-materials-bucket
+        - DynamoDBWritePolicy:
+            TableName: sylli-materials-table
+        - DynamoDBReadPolicy:
+            TableName: sylli-materials-table
+        - Statement:
+            - Effect: Allow
+              Action:
+                - lambda:InvokeFunction
+              Resource: !GetAtt EmbedWorkerFunction.Arn
       Events:
         Sylli:
           Type: Api
@@ -85,6 +101,69 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: sylli-syllabus-bucket
+
+  EmbedWorkerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: backend/
+      Handler: workers.embed_worker.lambda_handler
+      Runtime: python3.13
+      Architectures:
+        - arm64
+      Timeout: 300
+      Environment:
+        Variables:
+          MATERIALS_BUCKET: sylli-materials-bucket
+          MATERIALS_TABLE: sylli-materials-table
+          VECTOR_BUCKET_NAME: sylli-vectors
+          VECTOR_INDEX_NAME: materials-index
+          AWS_REGION_NAME: us-east-1
+      Policies:
+        - S3ReadPolicy:
+            BucketName: sylli-materials-bucket
+        - DynamoDBWritePolicy:
+            TableName: sylli-materials-table
+        - DynamoDBReadPolicy:
+            TableName: sylli-materials-table
+        - Statement:
+            - Effect: Allow
+              Action:
+                - bedrock:InvokeModel
+              Resource: "*"
+            - Effect: Allow
+              Action:
+                - s3vectors:PutVectors
+              Resource: "*"
+
+  MaterialsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: sylli-materials-bucket
+
+  MaterialsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: sylli-materials-table
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: material_id
+          AttributeType: S
+        - AttributeName: user_id
+          AttributeType: S
+        - AttributeName: uploaded_at
+          AttributeType: S
+      KeySchema:
+        - AttributeName: material_id
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: user_id-index
+          KeySchema:
+            - AttributeName: user_id
+              KeyType: HASH
+            - AttributeName: uploaded_at
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
 
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
