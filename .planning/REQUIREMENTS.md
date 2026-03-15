@@ -24,11 +24,11 @@
 
 ### Materials
 
-- [ ] **MAT-01**: User can upload PDF or PPTX files as course materials
+- [x] **MAT-01**: User can upload PDF or PPTX files as course materials
 - [ ] **MAT-02**: AI suggests which unit/week an uploaded material belongs to (based on parsed syllabus)
 - [ ] **MAT-03**: User can confirm or override the AI-suggested unit/week assignment for each material
-- [ ] **MAT-04**: Uploaded materials are chunked and embedded asynchronously (non-blocking upload flow)
-- [ ] **MAT-05**: Embeddings are stored with user_id and unit/week metadata for filtered retrieval
+- [x] **MAT-04**: Uploaded materials are chunked and embedded asynchronously (non-blocking upload flow)
+- [x] **MAT-05**: Embeddings are stored with user_id and unit/week metadata for filtered retrieval
 
 ### Library Navigator
 
@@ -93,11 +93,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | AUTH-03 | Phase 2 | Complete |
 | SYLL-01 | Phase 2 | Complete |
 | SYLL-02 | Phase 2 | Complete |
-| MAT-01 | Phase 3 | Pending |
+| MAT-01 | Phase 3 | Complete |
 | MAT-02 | Phase 3 | Pending |
 | MAT-03 | Phase 3 | Pending |
-| MAT-04 | Phase 3 | Pending |
-| MAT-05 | Phase 3 | Pending |
+| MAT-04 | Phase 3 | Complete |
+| MAT-05 | Phase 3 | Complete |
 | LIB-01 | Phase 3 | Pending |
 | LIB-02 | Phase 3 | Pending |
 | TUTOR-01 | Phase 4 | Pending |

@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Phase 3 context gathered
-last_updated: "2026-03-15T02:53:45.261Z"
+stopped_at: Completed 03-materials-and-library 03-01-PLAN.md
+last_updated: "2026-03-15T20:42:14.775Z"
 last_activity: 2026-03-14 — Phase 2 UAT approved, ready for Phase 3
 progress:
   total_phases: 5
   completed_phases: 2
-  total_plans: 7
-  completed_plans: 7
+  total_plans: 12
+  completed_plans: 8
   percent: 0
 ---
 
@@ -57,6 +57,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02-auth-and-syllabus P04 | 1min | 2 tasks | 4 files |
 | Phase 02-auth-and-syllabus P02 | 11 | 2 tasks | 8 files |
 | Phase 02-auth-and-syllabus P05 | 3 | 2 tasks | 1 files |
+| Phase 03-materials-and-library P01 | 2 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -83,6 +84,9 @@ Recent decisions affecting current work:
 - [Phase 02-auth-and-syllabus]: dynamo_service.get_syllabus returns None on ownership mismatch — anti-enumeration pattern prevents revealing whether a syllabus_id exists to unauthorized users
 - [Phase 02-auth-and-syllabus]: UAT checkpoint auto-approved in auto-mode per auto_advance configuration — actual manual UAT verification deferred to live testing session with Docker running
 - [Phase 02-auth-and-syllabus]: .aws-sam/ added to .gitignore — SAM build artifacts contain platform-specific compiled binaries and must not be tracked in git
+- [Phase 03-materials-and-library]: boto3 pinned >=1.39.5 in requirements.txt — Lambda runtime ships older boto3 without s3vectors client; SAM must bundle it
+- [Phase 03-materials-and-library]: EmbedWorkerFunction is a separate Lambda (300s timeout) for async embedding work; API Gateway 29s limit prevents inline processing
+- [Phase 03-materials-and-library]: MaterialsTable user_id-index GSI declared at table creation — DynamoDB GSIs cannot be added post-creation without table recreation
 
 ### Pending Todos
 
@@ -96,6 +100,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T02:53:45.249Z
-Stopped at: Phase 3 context gathered
-Resume file: .planning/phases/03-materials-and-library/03-CONTEXT.md
+Last session: 2026-03-15T20:42:14.772Z
+Stopped at: Completed 03-materials-and-library 03-01-PLAN.md
+Resume file: None
