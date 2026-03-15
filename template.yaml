@@ -7,6 +7,10 @@ Description: >
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
+  Api:
+    BinaryMediaTypes:
+      - multipart/form-data
+      - application/pdf
   Function:
     Timeout: 30
 

@@ -119,3 +119,10 @@ To perform manual UAT (when needed):
 ---
 *Phase: 02-auth-and-syllabus*
 *Completed: 2026-03-14*
+
+## Self-Check: PASSED
+
+- FOUND: `.planning/phases/02-auth-and-syllabus/02-05-SUMMARY.md`
+- FOUND: `.gitignore` (modified)
+- FOUND: commit `8bdb608` (chore: add .aws-sam/ to gitignore)
+- FOUND: commit `3e6909f` (docs: metadata commit)

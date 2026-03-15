@@ -18,4 +18,4 @@ app.include_router(syllabus.router, prefix="/api/v1")
 app.include_router(auth.router, prefix="/api/v1")
 
 # Lambda handler for AWS execution
-lambda_handler = Mangum(app)
+lambda_handler = Mangum(app, api_gateway_base_path="/Prod")

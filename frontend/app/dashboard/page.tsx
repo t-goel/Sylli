@@ -1,9 +1,10 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useAuth } from "@/context/AuthContext"
 import { SyllabusUpload } from "@/components/SyllabusUpload"
 import { WeekTimeline } from "@/components/WeekTimeline"
 import { useRouter } from "next/navigation"
+import { apiFetch } from "@/lib/api"
 
 interface WeekMap {
   course_name: string
@@ -20,8 +21,18 @@ export default function DashboardPage() {
   const router = useRouter()
   const [weekMap, setWeekMap] = useState<WeekMap | null>(null)
 
+  useEffect(() => {
+    const syllabusId = localStorage.getItem("syllabus_id")
+    if (!syllabusId) return
+    apiFetch(`/api/v1/syllabus/${syllabusId}`)
+      .then((res) => res.ok ? res.json() : null)
+      .then((data) => { if (data?.week_map) setWeekMap(data.week_map) })
+      .catch(() => {})
+  }, [])
+
   function handleUploadSuccess(data: unknown) {
-    const parsed = data as { week_map: WeekMap }
+    const parsed = data as { syllabus_id: string; week_map: WeekMap }
+    localStorage.setItem("syllabus_id", parsed.syllabus_id)
     setWeekMap(parsed.week_map)
   }
 

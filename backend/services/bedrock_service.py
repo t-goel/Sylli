@@ -22,7 +22,7 @@ bedrock = boto3.client(
     ),
 )
 
-MODEL_ID = "anthropic.claude-3-5-sonnet-20241022-v2:0"
+MODEL_ID = "us.anthropic.claude-sonnet-4-20250514-v1:0"
 
 SYSTEM_PROMPT = """You are a university course parser.
 Given a course syllabus, extract a structured week-by-week schedule.
@@ -72,7 +72,12 @@ def parse_syllabus_with_bedrock(pdf_bytes: bytes) -> dict:
             ],
         )
         raw_text = response["output"]["message"]["content"][0]["text"]
-        return json.loads(raw_text)
+        # Strip markdown code fences if model wrapped the JSON
+        stripped = raw_text.strip()
+        if stripped.startswith("```"):
+            stripped = stripped.split("\n", 1)[-1]
+            stripped = stripped.rsplit("```", 1)[0]
+        return json.loads(stripped)
     except json.JSONDecodeError as e:
         logger.error(
             "Bedrock response JSON parse failed",
