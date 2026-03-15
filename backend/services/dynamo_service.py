@@ -60,3 +60,60 @@ def get_user_by_username(username: str) -> dict | None:
     table = dynamodb.Table(USERS_TABLE_NAME)
     result = table.get_item(Key={"username": username})
     return result.get("Item")
+
+
+# ---------------------------------------------------------------------------
+# Material CRUD
+# ---------------------------------------------------------------------------
+
+MATERIALS_TABLE_NAME = os.getenv("MATERIALS_TABLE", "sylli-materials-table")
+
+
+def store_material(item: dict):
+    """Persist a material record to DynamoDB."""
+    table = dynamodb.Table(MATERIALS_TABLE_NAME)
+    table.put_item(Item=item)
+
+
+def get_material(material_id: str, user_id: str) -> dict | None:
+    """Retrieve a material. Returns None if not found or owned by another user (anti-enumeration)."""
+    table = dynamodb.Table(MATERIALS_TABLE_NAME)
+    result = table.get_item(Key={"material_id": material_id})
+    item = result.get("Item")
+    if item is None:
+        return None
+    if item.get("user_id") != user_id:
+        return None
+    return item
+
+
+def update_material_week(material_id: str, week_number: int, week_confirmed: bool = True):
+    """Update week_number and week_confirmed on a material record."""
+    table = dynamodb.Table(MATERIALS_TABLE_NAME)
+    table.update_item(
+        Key={"material_id": material_id},
+        UpdateExpression="SET week_number = :w, week_confirmed = :c",
+        ExpressionAttributeValues={":w": week_number, ":c": week_confirmed},
+    )
+
+
+def update_material_embed_status(material_id: str, embed_status: str):
+    """Update embed_status on a material record."""
+    table = dynamodb.Table(MATERIALS_TABLE_NAME)
+    table.update_item(
+        Key={"material_id": material_id},
+        UpdateExpression="SET embed_status = :s",
+        ExpressionAttributeValues={":s": embed_status},
+    )
+
+
+def list_materials_for_user(user_id: str) -> list[dict]:
+    """List all materials for a user via user_id-index GSI, sorted by uploaded_at."""
+    table = dynamodb.Table(MATERIALS_TABLE_NAME)
+    result = table.query(
+        IndexName="user_id-index",
+        KeyConditionExpression="user_id = :uid",
+        ExpressionAttributeValues={":uid": user_id},
+        ScanIndexForward=True,  # ascending uploaded_at
+    )
+    return result.get("Items", [])
