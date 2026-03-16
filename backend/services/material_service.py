@@ -1,5 +1,6 @@
 import io
 import json
+import logging
 import os
 from datetime import datetime, timezone
 from uuid import uuid4
@@ -9,6 +10,8 @@ from botocore.config import Config
 
 from services.dynamo_service import store_material, get_material, update_material_week, update_material_embed_status, delete_material as _delete_material_record
 from services.bedrock_service import MODEL_ID
+
+logger = logging.getLogger(__name__)
 
 MATERIALS_BUCKET = os.getenv("MATERIALS_BUCKET", "sylli-materials-bucket")
 EMBED_FUNCTION_NAME = os.getenv("EMBED_FUNCTION_NAME", "")
@@ -100,8 +103,10 @@ def confirm_material_week(material_id: str, user_id: str, week_number: int) -> d
             # Only mark processing if invoke succeeded — keeps local dev polling from looping forever
             update_material_embed_status(material_id, "processing")
             invoked = True
-        except Exception:
-            pass
+        except Exception as exc:
+            logger.exception("Lambda invoke failed for material %s: %s", material_id, exc)
+            update_material_embed_status(material_id, "error")
+            return {"material_id": material_id, "embed_status": "error"}
 
     embed_status = "processing" if invoked else "pending"
     return {"material_id": material_id, "embed_status": embed_status}

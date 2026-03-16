@@ -37,14 +37,14 @@
 
 ### AI Tutor
 
-- [ ] **TUTOR-01**: User can chat with an AI tutor that answers questions using their uploaded course materials
-- [ ] **TUTOR-02**: Every AI tutor response cites the specific source file and unit/week it referenced
+- [x] **TUTOR-01**: User can chat with an AI tutor that answers questions using their uploaded course materials
+- [x] **TUTOR-02**: Every AI tutor response cites the specific source file and unit/week it referenced
 
 ### Quiz Generator
 
-- [ ] **QUIZ-01**: User can generate a multiple-choice quiz scoped to a selected unit/week
-- [ ] **QUIZ-02**: User can generate a multiple-choice quiz spanning all uploaded course materials
-- [ ] **QUIZ-03**: Each quiz answer includes an explanation citing the source material it was drawn from
+- [x] **QUIZ-01**: User can generate a multiple-choice quiz scoped to a selected unit/week
+- [x] **QUIZ-02**: User can generate a multiple-choice quiz spanning all uploaded course materials
+- [x] **QUIZ-03**: Each quiz answer includes an explanation citing the source material it was drawn from
 
 ## v2 Requirements
 
@@ -100,11 +100,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | MAT-05 | Phase 3 | Complete |
 | LIB-01 | Phase 3 | Complete |
 | LIB-02 | Phase 3 | Complete |
-| TUTOR-01 | Phase 4 | Pending |
-| TUTOR-02 | Phase 4 | Pending |
-| QUIZ-01 | Phase 5 | Pending |
-| QUIZ-02 | Phase 5 | Pending |
-| QUIZ-03 | Phase 5 | Pending |
+| TUTOR-01 | Phase 4 | Complete |
+| TUTOR-02 | Phase 4 | Complete |
+| QUIZ-01 | Phase 5 | Complete |
+| QUIZ-02 | Phase 5 | Complete |
+| QUIZ-03 | Phase 5 | Complete |
 
 **Coverage:**
 - v1 requirements: 20 total

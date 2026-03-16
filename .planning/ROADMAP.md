@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation** - Fix existing bugs and stabilize the backend before any new features land (completed 2026-03-14)
 - [x] **Phase 2: Auth and Syllabus** - Gate data behind user accounts and deliver the first UI milestone (completed 2026-03-14)
 - [x] **Phase 3: Materials and Library** - Upload course materials with async embedding and display a chronological navigator (completed 2026-03-16)
-- [ ] **Phase 4: AI Tutor** - RAG pipeline with week-aware context and inline source citations
+- [x] **Phase 4: AI Tutor** - RAG pipeline with week-aware context and inline source citations (completed 2026-03-16)
 - [ ] **Phase 5: Quiz Generator** - On-demand quiz generation scoped to a unit or the full course
 
 ## Phase Details
@@ -80,7 +80,14 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. A user can type a question in the chat UI and receive an answer drawn from their own uploaded course materials (not generic LLM knowledge)
   2. Every AI tutor response includes at least one citation naming the specific source file and unit/week it referenced
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — Backend RAG pipeline: tutor_service.py, tutor router, IAM permissions (TUTOR-01, TUTOR-02)
+- [ ] 04-02-PLAN.md — Frontend: TutorChat.tsx component, dashboard three-tab layout (TUTOR-01, TUTOR-02)
+- [x] 04-03-PLAN.md — UAT checkpoint: verify Phase 4 success criteria (TUTOR-01, TUTOR-02) (completed 2026-03-16)
+- [ ] 04-04-PLAN.md — Gap closure: fix silent Lambda invocation swallow in confirm_material_week (TUTOR-01)
+- [ ] 04-05-PLAN.md — Gap closure: fix handleDeleteMaterial silent error swallow and race condition in MaterialLibrary.tsx (LIB-02)
 
 ### Phase 5: Quiz Generator
 **Goal**: Students can generate a multiple-choice quiz scoped to any unit or the full course and see explanations tied back to source material
@@ -90,7 +97,12 @@ Plans:
   1. A user can select a unit/week and generate a multiple-choice quiz scoped to only that unit's materials
   2. A user can generate a quiz spanning all uploaded course materials
   3. After answering each question, the user sees an explanation that cites the source material the answer was drawn from
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — Backend quiz pipeline: quiz_service.py, quiz router, app.py registration (QUIZ-01, QUIZ-02, QUIZ-03)
+- [ ] 05-02-PLAN.md — Frontend: QuizTab.tsx three-state component, dashboard tab activation (QUIZ-01, QUIZ-02, QUIZ-03)
+- [ ] 05-03-PLAN.md — UAT checkpoint: verify Phase 5 success criteria (QUIZ-01, QUIZ-02, QUIZ-03)
 
 ## Progress
 
@@ -102,5 +114,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Foundation | 2/2 | Complete   | 2026-03-14 |
 | 2. Auth and Syllabus | 5/5 | Complete | 2026-03-14 |
 | 3. Materials and Library | 6/6 | Complete   | 2026-03-16 |
-| 4. AI Tutor | 0/TBD | Not started | - |
-| 5. Quiz Generator | 0/TBD | Not started | - |
+| 4. AI Tutor | 5/5 | Complete   | 2026-03-16 |
+| 5. Quiz Generator | 2/3 | In Progress|  |

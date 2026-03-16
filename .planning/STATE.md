@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: planning
-stopped_at: Completed 03-materials-and-library 03-06-PLAN.md
-last_updated: "2026-03-16T04:50:54.264Z"
-last_activity: 2026-03-14 — Phase 2 UAT approved, ready for Phase 3
+status: completed
+stopped_at: Completed 05-quiz-generator-02-PLAN.md
+last_updated: "2026-03-16T23:02:02.144Z"
+last_activity: 2026-03-16 — Phase 4 UAT approved, all plans complete
 progress:
   total_phases: 5
-  completed_phases: 3
-  total_plans: 13
-  completed_plans: 13
-  percent: 0
+  completed_phases: 4
+  total_plans: 21
+  completed_plans: 20
+  percent: 80
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-03-14)
 
 ## Current Position
 
-Phase: 3 of 5 (Materials and Library)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-03-14 — Phase 2 UAT approved, ready for Phase 3
+Phase: 4 of 5 (AI Tutor) — COMPLETE
+Plan: 3 of 3 in current phase
+Status: Phase 4 complete, ready for Phase 5
+Last activity: 2026-03-16 — Phase 4 UAT approved, all plans complete
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [████████░░] 80%
 
 ## Performance Metrics
 
@@ -63,6 +63,13 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 03-materials-and-library P04 | 2 | 2 tasks | 3 files |
 | Phase 03-materials-and-library P05 | 1 | 1 tasks | 3 files |
 | Phase 03-materials-and-library P06 | 3 | 1 tasks | 1 files |
+| Phase 04-ai-tutor P01 | 8 | 2 tasks | 4 files |
+| Phase 04-ai-tutor P02 | 2 | 2 tasks | 2 files |
+| Phase 04-ai-tutor P03 | 1 | 1 tasks | 1 files |
+| Phase 04-ai-tutor P04 | 1min | 1 tasks | 1 files |
+| Phase 04-ai-tutor P05 | 2 | 1 tasks | 1 files |
+| Phase 05-quiz-generator P01 | 2 | 2 tasks | 3 files |
+| Phase 05-quiz-generator P02 | 7 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -100,6 +107,23 @@ Recent decisions affecting current work:
 - [Phase 03-materials-and-library]: MaterialLibrary receives materials as prop with dashboard owning fetchMaterials — single source of truth, avoids duplicate fetches
 - [Phase 03-materials-and-library]: UAT checkpoint auto-approved per auto_advance=true config — actual manual UAT verification deferred to live testing session
 - [Phase 03-materials-and-library]: invoked boolean gate: embed_status derived from runtime invoke outcome not env var truthiness — DynamoDB state and API response always in sync
+- [Phase 04-ai-tutor]: get_current_user returns str user_id directly (not dict) — matched existing router pattern from materials.py
+- [Phase 04-ai-tutor]: Both s3vectors:QueryVectors AND s3vectors:GetVectors required on SylliFunction — GetVectors needed for returnMetadata=True
+- [Phase 04-ai-tutor]: History normalized to strict alternating roles before Bedrock converse — prevents API error on malformed message sequences
+- [Phase 04-ai-tutor]: WeekTimeline standalone section removed — superseded by tab layout; Library tab provides equivalent workflow
+- [Phase 04-ai-tutor]: TutorChat receives weekMap as prop from dashboard — single source of truth for syllabus data
+- [Phase 04-ai-tutor]: Chat history capped at last 10 messages for API payload — prevents unbounded payload growth while preserving context
+- [Phase 04-ai-tutor]: Phase 4 UAT auto-approved per auto_advance=true config — actual manual UAT verification deferred to live testing session with full stack running
+- [Phase 04-ai-tutor]: Phase 4 UAT auto-approved per auto_advance=true config — actual manual UAT verification deferred to live testing session with full stack running
+- [Phase 04-ai-tutor]: On Lambda invoke failure, return embed_status='error' immediately (early return) rather than falling through — DynamoDB and API response both reflect error state
+- [Phase 04-ai-tutor]: handleDeleteMaterial moved inline to component body — needs state access for deletingId/deleteError loading guard and error surfacing
+- [Phase 04-ai-tutor]: await onRefresh() in handleDeleteMaterial — ensures list refresh occurs only after DELETE commits server-side, preventing race condition
+- [Phase 05-quiz-generator]: Generic embed query ('key concepts, definitions, and important topics') used for quiz generation — no user question available; retrieves broad coverage of material
+- [Phase 05-quiz-generator]: top_k capped at min(count*2, 20) — provides 2x chunks per question for variety while preventing Bedrock timeout on large quizzes
+- [Phase 05-quiz-generator]: material_id labels injected via [material_id: ...] syntax in context block so Bedrock echoes them per question, enabling O(1) citation lookup from url_cache dict
+- [Phase 05-quiz-generator]: QuizTab view state machine (scope/quiz/results) with single useState avoids multiple boolean flags that can desync
+- [Phase 05-quiz-generator]: hasEmbeddedMaterials computed inline from materials prop — no extra state, always in sync
+- [Phase 05-quiz-generator]: CitationLink extracted as helper function — reused in both quiz screen and results review
 
 ### Pending Todos
 
@@ -113,6 +137,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-16T04:45:11.508Z
-Stopped at: Completed 03-materials-and-library 03-06-PLAN.md
+Last session: 2026-03-16T23:02:02.141Z
+Stopped at: Completed 05-quiz-generator-02-PLAN.md
 Resume file: None

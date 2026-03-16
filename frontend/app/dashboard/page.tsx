@@ -2,9 +2,10 @@
 import { useState, useEffect } from "react"
 import { useAuth } from "@/context/AuthContext"
 import { SyllabusUpload } from "@/components/SyllabusUpload"
-import { WeekTimeline } from "@/components/WeekTimeline"
 import { MaterialUpload } from "@/components/MaterialUpload"
 import { MaterialLibrary } from "@/components/MaterialLibrary"
+import { TutorChat } from "@/components/TutorChat"
+import { QuizTab } from "@/components/QuizTab"
 import { useRouter } from "next/navigation"
 import { apiFetch } from "@/lib/api"
 
@@ -34,6 +35,8 @@ export default function DashboardPage() {
   const [weekMap, setWeekMap] = useState<WeekMap | null>(null)
   const [syllabusId, setSyllabusId] = useState<string | null>(null)
   const [materials, setMaterials] = useState<Material[]>([])
+  const [activeTab, setActiveTab] = useState<"library" | "tutor" | "quiz">("library")
+  const [showSyllabusUpload, setShowSyllabusUpload] = useState(false)
 
   useEffect(() => {
     // Always load syllabus from server — not localStorage — so it works across browsers/incognito
@@ -83,37 +86,77 @@ export default function DashboardPage() {
         </button>
       </div>
 
-      <section>
-        <h2 className="text-lg font-semibold mb-3">Upload Syllabus</h2>
-        <SyllabusUpload onUploadSuccess={handleUploadSuccess} />
+      <section className="mb-8">
+        {weekMap === null ? (
+          <>
+            <h2 className="text-lg font-semibold mb-3">Upload Syllabus</h2>
+            <SyllabusUpload onUploadSuccess={handleUploadSuccess} />
+          </>
+        ) : (
+          <div>
+            <button
+              onClick={() => setShowSyllabusUpload((v) => !v)}
+              className="text-sm text-gray-500 hover:text-gray-300 transition-colors"
+            >
+              {showSyllabusUpload ? "Cancel" : "Replace syllabus"}
+            </button>
+            {showSyllabusUpload && (
+              <div className="mt-3">
+                <SyllabusUpload
+                  onUploadSuccess={(data) => {
+                    handleUploadSuccess(data)
+                    setShowSyllabusUpload(false)
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        )}
       </section>
 
       {weekMap && (
-        <section className="mt-8">
-          <WeekTimeline weekMap={weekMap} />
-        </section>
+        <div className="flex gap-1 mb-6 border-b border-gray-800">
+          {(["library", "tutor", "quiz"] as const).map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              disabled={false}
+              className={`px-4 py-2 text-sm capitalize transition-colors ${
+                activeTab === tab
+                  ? "border-b-2 border-white text-white"
+                  : "text-gray-400 hover:text-gray-200"
+              }`}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </button>
+          ))}
+        </div>
       )}
 
       {weekMap && (
-        <section className="mt-8">
-          <h2 className="text-lg font-semibold mb-3">Upload Materials</h2>
-          <MaterialUpload
-            syllabusId={syllabusId}
-            weekMap={weekMap}
-            onMaterialUploaded={fetchMaterials}
-          />
-        </section>
-      )}
-
-      {weekMap && (
-        <section className="mt-8">
-          <h2 className="text-lg font-semibold mb-3">Course Materials</h2>
-          <MaterialLibrary
-            weekMap={weekMap}
-            materials={materials}
-            onRefresh={fetchMaterials}
-          />
-        </section>
+        <>
+          {activeTab === "library" && (
+            <>
+              <section className="mb-8">
+                <h2 className="text-lg font-semibold mb-3">Upload Materials</h2>
+                <MaterialUpload
+                  syllabusId={syllabusId}
+                  weekMap={weekMap}
+                  onMaterialUploaded={fetchMaterials}
+                />
+              </section>
+              <section>
+                <MaterialLibrary
+                  weekMap={weekMap}
+                  materials={materials}
+                  onRefresh={fetchMaterials}
+                />
+              </section>
+            </>
+          )}
+          {activeTab === "tutor" && <TutorChat weekMap={weekMap} />}
+          {activeTab === "quiz" && <QuizTab weekMap={weekMap} materials={materials} />}
+        </>
       )}
     </main>
   )

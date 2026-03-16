@@ -1,4 +1,5 @@
 "use client"
+import { useState } from "react"
 import { apiFetch } from "@/lib/api"
 
 interface WeekMap {
@@ -35,11 +36,6 @@ async function handleOpenMaterial(materialId: string) {
   }
 }
 
-async function handleDeleteMaterial(materialId: string, onRefresh: () => void) {
-  await apiFetch(`/api/v1/materials/${materialId}`, { method: "DELETE" })
-  onRefresh()
-}
-
 function FileTypeBadge({ fileType }: { fileType: "pdf" | "pptx" }) {
   if (fileType === "pdf") {
     return (
@@ -56,12 +52,35 @@ function FileTypeBadge({ fileType }: { fileType: "pdf" | "pptx" }) {
 }
 
 export function MaterialLibrary({ weekMap, materials, onRefresh }: MaterialLibraryProps) {
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [deleteError, setDeleteError] = useState<string | null>(null)
+
+  async function handleDeleteMaterial(materialId: string) {
+    if (deletingId !== null) return          // guard: one delete at a time
+    setDeletingId(materialId)
+    setDeleteError(null)
+    try {
+      const res = await apiFetch(`/api/v1/materials/${materialId}`, { method: "DELETE" })
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        setDeleteError(body.detail ?? "Delete failed — please try again")
+        return
+      }
+      await onRefresh()                       // await so list updates after DELETE commits
+    } finally {
+      setDeletingId(null)
+    }
+  }
+
   if (!weekMap || weekMap.weeks.length === 0) {
     return null
   }
 
   return (
     <div className="space-y-6">
+      {deleteError && (
+        <p className="text-sm text-red-400 px-1">{deleteError}</p>
+      )}
       {weekMap.weeks.map((week) => {
         const weekMaterials = materials.filter((m) => m.week_number === week.week)
 
@@ -102,11 +121,12 @@ export function MaterialLibrary({ weekMap, materials, onRefresh }: MaterialLibra
                         </span>
                       )}
                       <button
-                        onClick={() => handleDeleteMaterial(material.material_id, onRefresh)}
-                        className="opacity-0 group-hover:opacity-100 text-gray-500 hover:text-red-400 transition-all text-xs px-1"
+                        onClick={() => handleDeleteMaterial(material.material_id)}
+                        disabled={deletingId === material.material_id}
+                        className="opacity-0 group-hover:opacity-100 text-gray-500 hover:text-red-400 transition-all text-xs px-1 disabled:opacity-50 disabled:cursor-not-allowed"
                         title="Delete"
                       >
-                        ✕
+                        {deletingId === material.material_id ? "..." : "✕"}
                       </button>
                     </div>
                   </div>

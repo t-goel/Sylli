@@ -11,6 +11,20 @@ Globals:
     BinaryMediaTypes:
       - multipart/form-data
       - application/pdf
+    # Ensure CORS headers are present on API Gateway-level error responses (e.g. 403, 502, 504).
+    # Without this, Gateway Responses (errors that bypass Lambda) lack Access-Control-Allow-Origin
+    # and the browser throws TypeError: Failed to fetch instead of a usable error.
+    GatewayResponses:
+      DEFAULT_4XX:
+        ResponseParameters:
+          Headers:
+            Access-Control-Allow-Origin: "'http://localhost:3000'"
+            Access-Control-Allow-Headers: "'*'"
+      DEFAULT_5XX:
+        ResponseParameters:
+          Headers:
+            Access-Control-Allow-Origin: "'http://localhost:3000'"
+            Access-Control-Allow-Headers: "'*'"
   Function:
     Timeout: 30
 
@@ -35,6 +49,9 @@ Resources:
           MATERIALS_BUCKET: sylli-materials-bucket
           MATERIALS_TABLE: sylli-materials-table
           EMBED_FUNCTION_NAME: !Ref EmbedWorkerFunction
+          VECTOR_BUCKET_NAME: sylli-vectors
+          VECTOR_INDEX_NAME: materials-index
+          AWS_REGION_NAME: us-east-1
       Policies:
         - S3WritePolicy:
             BucketName: sylli-syllabus-bucket
@@ -66,6 +83,12 @@ Resources:
               Action:
                 - lambda:InvokeFunction
               Resource: !GetAtt EmbedWorkerFunction.Arn
+        - Statement:
+            - Effect: Allow
+              Action:
+                - s3vectors:QueryVectors
+                - s3vectors:GetVectors
+              Resource: "*"
       Events:
         Sylli:
           Type: Api
