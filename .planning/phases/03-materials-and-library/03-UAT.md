@@ -1,5 +1,5 @@
 ---
-status: complete
+status: diagnosed
 phase: 03-materials-and-library
 source: [03-01-SUMMARY.md, 03-02-SUMMARY.md, 03-03-SUMMARY.md, 03-04-SUMMARY.md, 03-05-SUMMARY.md]
 started: 2026-03-16T05:00:00Z
@@ -62,7 +62,13 @@ skipped: 1
   reason: "User reported: it just says embedding failed and then disappears"
   severity: major
   test: 3
-  root_cause: ""
-  artifacts: []
-  missing: []
-  debug_session: ""
+  root_cause: "confirm_material_week returns embed_status='processing' based on EMBED_FUNCTION_NAME truthiness, not whether lambda_client.invoke() succeeded. When invoke throws, except block silently passes, DynamoDB stays at 'pending'. Frontend polls 4s later, gets 'pending', treats it as 'Lambda never fired' and shows Embedding failed."
+  artifacts:
+    - path: "backend/services/material_service.py"
+      issue: "embed_status return value on line 104 not tied to actual invoke outcome — set to 'processing' even when lambda invoke throws"
+    - path: "frontend/components/MaterialUpload.tsx"
+      issue: "lines 166-171: polled status==='pending' treated as error (correct behavior, not a bug)"
+  missing:
+    - "Track whether invoke+update_material_embed_status succeeded with local boolean"
+    - "Return 'processing' only when invoked=True, otherwise return 'pending'"
+  debug_session: ".planning/debug/confirm-embedding-failed.md"

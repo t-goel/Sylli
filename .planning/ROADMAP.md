@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Fix existing bugs and stabilize the backend before any new features land (completed 2026-03-14)
 - [x] **Phase 2: Auth and Syllabus** - Gate data behind user accounts and deliver the first UI milestone (completed 2026-03-14)
-- [ ] **Phase 3: Materials and Library** - Upload course materials with async embedding and display a chronological navigator
+- [x] **Phase 3: Materials and Library** - Upload course materials with async embedding and display a chronological navigator (completed 2026-03-16)
 - [ ] **Phase 4: AI Tutor** - RAG pipeline with week-aware context and inline source citations
 - [ ] **Phase 5: Quiz Generator** - On-demand quiz generation scoped to a unit or the full course
 
@@ -63,7 +63,7 @@ Plans:
   3. Uploaded materials appear organized by unit/week in a chronological library view
   4. The user can click any material in the library to view the original file
   5. Embeddings for uploaded materials are stored with user_id and unit/week metadata so they can be filtered during retrieval
-**Plans**: 5 plans
+**Plans**: 6 plans
 
 Plans:
 - [ ] 03-01-PLAN.md — Infrastructure: requirements.txt deps, SAM resources (MaterialsBucket, MaterialsTable w/ GSI, EmbedWorkerFunction, IAM policies) (MAT-01, MAT-04, MAT-05)
@@ -71,6 +71,7 @@ Plans:
 - [ ] 03-03-PLAN.md — Async embedding pipeline: embedding_service, embed worker Lambda, text extraction, S3 Vectors write (MAT-04, MAT-05)
 - [ ] 03-04-PLAN.md — Frontend: MaterialUpload (inline confirmation + polling), MaterialLibrary (week-organized), dashboard wiring (MAT-01, MAT-02, MAT-03, MAT-04, LIB-01, LIB-02)
 - [ ] 03-05-PLAN.md — UAT checkpoint: verify all 5 Phase 3 success criteria (MAT-01, MAT-02, MAT-03, MAT-04, MAT-05, LIB-01, LIB-02)
+- [ ] 03-06-PLAN.md — Gap closure: fix confirm_material_week returning "processing" on failed invoke (MAT-03)
 
 ### Phase 4: AI Tutor
 **Goal**: Students can ask questions about their course and receive answers grounded in their uploaded materials with citations back to the source
@@ -100,6 +101,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete   | 2026-03-14 |
 | 2. Auth and Syllabus | 5/5 | Complete | 2026-03-14 |
-| 3. Materials and Library | 5/5 | Complete   | 2026-03-15 |
+| 3. Materials and Library | 6/6 | Complete   | 2026-03-16 |
 | 4. AI Tutor | 0/TBD | Not started | - |
 | 5. Quiz Generator | 0/TBD | Not started | - |

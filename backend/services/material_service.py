@@ -88,6 +88,7 @@ def confirm_material_week(material_id: str, user_id: str, week_number: int) -> d
     update_material_week(material_id, week_number, week_confirmed=True)
 
     # Trigger embedding asynchronously — fire and forget
+    invoked = False
     if EMBED_FUNCTION_NAME:
         payload = {"material_id": material_id, "user_id": user_id, "week_number": week_number}
         try:
@@ -98,10 +99,11 @@ def confirm_material_week(material_id: str, user_id: str, week_number: int) -> d
             )
             # Only mark processing if invoke succeeded — keeps local dev polling from looping forever
             update_material_embed_status(material_id, "processing")
+            invoked = True
         except Exception:
             pass
 
-    embed_status = "processing" if EMBED_FUNCTION_NAME else "pending"
+    embed_status = "processing" if invoked else "pending"
     return {"material_id": material_id, "embed_status": embed_status}
 
 
