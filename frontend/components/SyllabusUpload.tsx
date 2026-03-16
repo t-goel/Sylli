@@ -13,8 +13,8 @@ export function SyllabusUpload({ onUploadSuccess }: SyllabusUploadProps) {
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
-    if (!file.name.toLowerCase().endsWith(".pdf")) {
-      setError("Only PDF files are supported.")
+    if (!file.name.toLowerCase().endsWith(".pdf") && !file.name.toLowerCase().endsWith(".docx")) {
+      setError("Only PDF and DOCX files are supported.")
       return
     }
 
@@ -62,15 +62,15 @@ export function SyllabusUpload({ onUploadSuccess }: SyllabusUploadProps) {
         className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-600 rounded-lg cursor-pointer hover:border-blue-500 transition-colors"
       >
         <span className="text-gray-400 text-sm">
-          {uploading ? "Uploading and parsing..." : "Click to upload your syllabus PDF"}
+          {uploading ? "Uploading and parsing..." : "Click to upload your syllabus"}
         </span>
-        <span className="text-gray-500 text-xs mt-1">PDF only</span>
+        <span className="text-gray-500 text-xs mt-1">PDF or DOCX</span>
       </label>
       <input
         ref={inputRef}
         id="syllabus-upload"
         type="file"
-        accept=".pdf"
+        accept=".pdf,.docx"
         className="hidden"
         onChange={handleFileChange}
         disabled={uploading}

@@ -46,7 +46,7 @@ async def upload_material(file, user_id: str, week_map: dict) -> dict:
     """Upload material to S3, get AI week suggestion, store DynamoDB record."""
     filename = file.filename
     ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
-    file_type = ext if ext in ("pdf", "pptx") else "pdf"
+    file_type = ext if ext in ("pdf", "pptx", "docx") else "pdf"
 
     material_id = str(uuid4())
     s3_key = f"materials/{material_id}/{filename}"

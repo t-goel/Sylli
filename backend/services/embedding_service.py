@@ -27,7 +27,7 @@ CHUNK_OVERLAP = 200
 
 
 def extract_text(file_bytes: bytes, file_type: str) -> str:
-    """Extract plain text from PDF or PPTX bytes."""
+    """Extract plain text from PDF, PPTX, or DOCX bytes."""
     if file_type == "pdf":
         import fitz  # PyMuPDF — imported locally to isolate heavy dependency
         doc = fitz.open(stream=file_bytes, filetype="pdf")
@@ -41,6 +41,10 @@ def extract_text(file_bytes: bytes, file_type: str) -> str:
                 if shape.has_text_frame:
                     texts.append(shape.text_frame.text)
         return "\n".join(texts)
+    elif file_type == "docx":
+        from docx import Document
+        doc = Document(io.BytesIO(file_bytes))
+        return "\n".join(para.text for para in doc.paragraphs if para.text.strip())
     else:
         raise ValueError(f"Unsupported file_type: {file_type!r}")
 

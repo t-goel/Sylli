@@ -5,7 +5,7 @@ from services.dynamo_service import get_material, list_materials_for_user, updat
 
 router = APIRouter()
 
-ALLOWED_EXTENSIONS = (".pdf", ".pptx")
+ALLOWED_EXTENSIONS = (".pdf", ".pptx", ".docx")
 
 
 @router.post("/materials", tags=["materials"])
@@ -17,7 +17,7 @@ async def upload_material_endpoint(
     """Upload a PDF or PPTX material. Returns material_id and AI-suggested week synchronously."""
     filename = file.filename or ""
     if not any(filename.lower().endswith(ext) for ext in ALLOWED_EXTENSIONS):
-        raise HTTPException(status_code=400, detail="Only PDF and PPTX files are supported.")
+        raise HTTPException(status_code=400, detail="Only PDF, PPTX, and DOCX files are supported.")
 
     # Fetch week_map from DynamoDB if syllabus_id provided
     week_map = {}

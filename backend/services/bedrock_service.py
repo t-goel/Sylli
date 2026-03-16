@@ -43,8 +43,8 @@ If weeks are grouped into units instead, map each unit to its week numbers.
 If a field has no data, use an empty string or empty array."""
 
 
-def parse_syllabus_with_bedrock(pdf_bytes: bytes) -> dict:
-    """Send a syllabus PDF to Claude via Bedrock and return a parsed week map."""
+def parse_syllabus_with_bedrock(pdf_bytes: bytes, fmt: str = "pdf") -> dict:
+    """Send a syllabus PDF or DOCX to Claude via Bedrock and return a parsed week map."""
     raw_text = ""
     try:
         response = bedrock.converse(
@@ -56,7 +56,7 @@ def parse_syllabus_with_bedrock(pdf_bytes: bytes) -> dict:
                     "content": [
                         {
                             "document": {
-                                "format": "pdf",
+                                "format": fmt,
                                 "name": "syllabus",
                                 "source": {"bytes": pdf_bytes},
                             }

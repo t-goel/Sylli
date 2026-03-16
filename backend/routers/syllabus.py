@@ -10,9 +10,9 @@ async def upload_syllabus(
     file: UploadFile = File(...),
     user_id: str = Depends(get_current_user),
 ):
-    """Upload a syllabus PDF, parse it with AI, and return the week map."""
-    if not file.filename.lower().endswith(".pdf"):
-        raise HTTPException(status_code=400, detail="Only PDF files are supported.")
+    """Upload a syllabus PDF or DOCX, parse it with AI, and return the week map."""
+    if not any(file.filename.lower().endswith(ext) for ext in (".pdf", ".docx")):
+        raise HTTPException(status_code=400, detail="Only PDF and DOCX files are supported.")
     try:
         result = await upload_syllabus_to_s3(file, user_id=user_id)
         return result

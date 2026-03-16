@@ -16,7 +16,7 @@ interface WeekMap {
 interface UploadedMaterial {
   material_id: string
   filename: string
-  file_type: "pdf" | "pptx"
+  file_type: "pdf" | "pptx" | "docx"
   week_number: number
   week_confirmed: boolean
   embed_status: "pending" | "processing" | "ready" | "error"
@@ -140,12 +140,12 @@ export function MaterialUpload({ syllabusId, weekMap, onMaterialUploaded }: Mate
     <div className="space-y-4">
       <div>
         <label className="block text-sm text-gray-400 mb-2">
-          Select a PDF or PPTX file to upload
+          Select a PDF, PPTX, or DOCX file to upload
         </label>
         <input
           ref={fileInputRef}
           type="file"
-          accept=".pdf,.pptx,application/pdf,application/vnd.openxmlformats-officedocument.presentationml.presentation"
+          accept=".pdf,.pptx,.docx,application/pdf,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
           onChange={handleFileChange}
           disabled={uploading || pendingMaterial !== null}
           className="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-medium file:bg-gray-700 file:text-gray-200 hover:file:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
