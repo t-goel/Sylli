@@ -20,6 +20,15 @@ async def upload_syllabus(
         raise HTTPException(status_code=500, detail="Failed to parse syllabus. Please try again.")
 
 
+@router.get("/syllabus", tags=["syllabus"])
+async def get_current_syllabus(user_id: str = Depends(get_current_user)):
+    """Retrieve the current user's active syllabus (server-side, no localStorage needed)."""
+    result = await fetch_syllabus(user_id, user_id=user_id)
+    if result is None:
+        raise HTTPException(status_code=404, detail="No syllabus found.")
+    return result
+
+
 @router.get("/syllabus/{syllabus_id}", tags=["syllabus"])
 async def get_syllabus(
     syllabus_id: str,

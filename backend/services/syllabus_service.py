@@ -16,7 +16,8 @@ async def upload_syllabus_to_s3(file: UploadFile, user_id: str) -> dict:
     """Upload syllabus to S3, parse it with Bedrock, store result in DynamoDB."""
     file_bytes = await file.read()
 
-    syllabus_id = str(uuid.uuid4())
+    # Use user_id as syllabus_id — each user has exactly one active syllabus (upsert replaces it)
+    syllabus_id = user_id
     s3_key = f"syllabus/{syllabus_id}/{file.filename}"
 
     # 1. Store raw file in S3

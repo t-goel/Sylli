@@ -36,14 +36,16 @@ export default function DashboardPage() {
   const [materials, setMaterials] = useState<Material[]>([])
 
   useEffect(() => {
-    const id = localStorage.getItem("syllabus_id")
-    setSyllabusId(id)
-    if (id) {
-      apiFetch(`/api/v1/syllabus/${id}`)
-        .then((res) => res.ok ? res.json() : null)
-        .then((data) => { if (data?.week_map) setWeekMap(data.week_map) })
-        .catch(() => {})
-    }
+    // Always load syllabus from server — not localStorage — so it works across browsers/incognito
+    apiFetch("/api/v1/syllabus")
+      .then((res) => res.ok ? res.json() : null)
+      .then((data) => {
+        if (data?.week_map) {
+          setWeekMap(data.week_map)
+          setSyllabusId(data.syllabus_id)
+        }
+      })
+      .catch(() => {})
     fetchMaterials()
   }, [])
 
