@@ -7,7 +7,7 @@ from uuid import uuid4
 import boto3
 from botocore.config import Config
 
-from services.dynamo_service import store_material, get_material, update_material_week
+from services.dynamo_service import store_material, get_material, update_material_week, update_material_embed_status
 from services.bedrock_service import MODEL_ID
 
 MATERIALS_BUCKET = os.getenv("MATERIALS_BUCKET", "sylli-materials-bucket")
@@ -96,12 +96,13 @@ def confirm_material_week(material_id: str, user_id: str, week_number: int) -> d
                 InvocationType="Event",
                 Payload=json.dumps(payload),
             )
+            # Only mark processing if invoke succeeded — keeps local dev polling from looping forever
+            update_material_embed_status(material_id, "processing")
         except Exception:
-            # Swallow invoke errors locally (function not deployed yet).
-            # embed_status stays 'processing'; worker sets it to 'ready'/'error' when deployed.
             pass
 
-    return {"material_id": material_id, "embed_status": "processing"}
+    embed_status = "processing" if EMBED_FUNCTION_NAME else "pending"
+    return {"material_id": material_id, "embed_status": embed_status}
 
 
 def get_presigned_url(material_id: str, user_id: str) -> str | None:

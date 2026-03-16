@@ -248,4 +248,5 @@ $RECYCLE.BIN/
 
 
 settings.local.json
+env.local.json
 # End of https://www.gitignore.io/api/osx,linux,python,windows,pycharm,visualstudiocode

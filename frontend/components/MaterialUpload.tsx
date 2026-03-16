@@ -107,7 +107,12 @@ export function MaterialUpload({ syllabusId, weekMap, onMaterialUploaded }: Mate
         return
       }
 
-      setEmbedStatus("processing")
+      const confirmData = await res.json()
+      const initialStatus = confirmData.embed_status ?? "processing"
+      setEmbedStatus(initialStatus)
+
+      // Only poll if embedding was actually triggered
+      if (initialStatus !== "processing") return
 
       // Start polling every 4000ms
       intervalRef.current = setInterval(async () => {
@@ -208,6 +213,9 @@ export function MaterialUpload({ syllabusId, weekMap, onMaterialUploaded }: Mate
             </div>
           )}
 
+          {embedStatus === "pending" && (
+            <p className="text-xs text-gray-400">Confirmed — embedding queued</p>
+          )}
           {embedStatus === "processing" && (
             <p className="text-xs text-gray-400">Processing...</p>
           )}

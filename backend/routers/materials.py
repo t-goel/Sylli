@@ -1,7 +1,7 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Body
 from middleware.auth import get_current_user
 from services.material_service import upload_material, confirm_material_week, get_presigned_url
-from services.dynamo_service import get_material, list_materials_for_user, update_material_embed_status
+from services.dynamo_service import get_material, list_materials_for_user
 
 router = APIRouter()
 
@@ -44,8 +44,6 @@ async def confirm_week_endpoint(
     result = confirm_material_week(material_id, user_id, week_number)
     if result is None:
         raise HTTPException(status_code=404, detail="Material not found.")
-    # Update DynamoDB embed_status to 'processing' so polling reflects it immediately
-    update_material_embed_status(material_id, "processing")
     return result
 
 
