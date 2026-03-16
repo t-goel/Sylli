@@ -37,6 +37,8 @@ export function MaterialUpload({ syllabusId, weekMap, onMaterialUploaded }: Mate
   const [error, setError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const pollStartRef = useRef<number | null>(null)
+  const POLL_TIMEOUT_MS = 5 * 60 * 1000 // 5 minutes
 
   useEffect(() => {
     return () => {
@@ -50,6 +52,11 @@ export function MaterialUpload({ syllabusId, weekMap, onMaterialUploaded }: Mate
     const file = e.target.files?.[0]
     if (!file) return
 
+    // Clear any in-progress polling from a previous upload
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current)
+      intervalRef.current = null
+    }
     setUploading(true)
     setError(null)
     setPendingMaterial(null)
@@ -124,21 +131,44 @@ export function MaterialUpload({ syllabusId, weekMap, onMaterialUploaded }: Mate
       }
 
       // Start polling every 4000ms until embed completes
+      pollStartRef.current = Date.now()
       intervalRef.current = setInterval(async () => {
+        // Stop polling after 5 minutes regardless
+        if (pollStartRef.current && Date.now() - pollStartRef.current > POLL_TIMEOUT_MS) {
+          clearInterval(intervalRef.current!)
+          intervalRef.current = null
+          setEmbedStatus("error")
+          setTimeout(() => { setPendingMaterial(null); setEmbedStatus(null) }, 3000)
+          return
+        }
+
         const { apiFetch: apiFetchInner } = await import("@/lib/api")
         const statusRes = await apiFetchInner(`/api/v1/materials/${pendingMaterial.material_id}/status`)
-        if (statusRes.ok) {
-          const statusData = await statusRes.json()
-          if (statusData.embed_status === "ready" || statusData.embed_status === "error") {
-            clearInterval(intervalRef.current!)
-            intervalRef.current = null
-            setEmbedStatus(statusData.embed_status)
-            onMaterialUploaded()
-            setTimeout(() => {
-              setPendingMaterial(null)
-              setEmbedStatus(null)
-            }, 2000)
-          }
+        if (!statusRes.ok) {
+          // Material was deleted or no longer accessible — stop polling and clear the row
+          clearInterval(intervalRef.current!)
+          intervalRef.current = null
+          setPendingMaterial(null)
+          setEmbedStatus(null)
+          return
+        }
+        const statusData = await statusRes.json()
+        const status = statusData.embed_status
+        if (status === "ready" || status === "error") {
+          clearInterval(intervalRef.current!)
+          intervalRef.current = null
+          setEmbedStatus(status)
+          onMaterialUploaded()
+          setTimeout(() => {
+            setPendingMaterial(null)
+            setEmbedStatus(null)
+          }, 2000)
+        } else if (status === "pending") {
+          // Lambda never fired (e.g. running locally) — stop polling
+          clearInterval(intervalRef.current!)
+          intervalRef.current = null
+          setEmbedStatus("error")
+          setTimeout(() => { setPendingMaterial(null); setEmbedStatus(null) }, 3000)
         }
       }, 4000)
     } catch (err) {
@@ -159,7 +189,7 @@ export function MaterialUpload({ syllabusId, weekMap, onMaterialUploaded }: Mate
           type="file"
           accept=".pdf,.pptx,.docx,application/pdf,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
           onChange={handleFileChange}
-          disabled={uploading || pendingMaterial !== null}
+          disabled={uploading}
           className="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-medium file:bg-gray-700 file:text-gray-200 hover:file:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
         />
       </div>
