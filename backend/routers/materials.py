@@ -1,6 +1,6 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Body
 from middleware.auth import get_current_user
-from services.material_service import upload_material, confirm_material_week, get_presigned_url
+from services.material_service import upload_material, confirm_material_week, get_presigned_url, delete_material
 from services.dynamo_service import get_material, list_materials_for_user
 
 router = APIRouter()
@@ -61,6 +61,15 @@ async def get_material_status(material_id: str, user_id: str = Depends(get_curre
     if item is None:
         raise HTTPException(status_code=404, detail="Material not found.")
     return {"embed_status": item.get("embed_status", "pending")}
+
+
+@router.delete("/materials/{material_id}", tags=["materials"])
+async def delete_material_endpoint(material_id: str, user_id: str = Depends(get_current_user)):
+    """Delete a material (S3 best-effort + DynamoDB)."""
+    ok = delete_material(material_id, user_id)
+    if not ok:
+        raise HTTPException(status_code=404, detail="Material not found.")
+    return {"deleted": True}
 
 
 @router.get("/materials/{material_id}/view", tags=["materials"])

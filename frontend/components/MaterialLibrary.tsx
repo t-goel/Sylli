@@ -35,6 +35,11 @@ async function handleOpenMaterial(materialId: string) {
   }
 }
 
+async function handleDeleteMaterial(materialId: string, onRefresh: () => void) {
+  await apiFetch(`/api/v1/materials/${materialId}`, { method: "DELETE" })
+  onRefresh()
+}
+
 function FileTypeBadge({ fileType }: { fileType: "pdf" | "pptx" }) {
   if (fileType === "pdf") {
     return (
@@ -50,7 +55,7 @@ function FileTypeBadge({ fileType }: { fileType: "pdf" | "pptx" }) {
   )
 }
 
-export function MaterialLibrary({ weekMap, materials }: MaterialLibraryProps) {
+export function MaterialLibrary({ weekMap, materials, onRefresh }: MaterialLibraryProps) {
   if (!weekMap || weekMap.weeks.length === 0) {
     return null
   }
@@ -73,11 +78,13 @@ export function MaterialLibrary({ weekMap, materials }: MaterialLibraryProps) {
                 weekMaterials.map((material) => (
                   <div
                     key={material.material_id}
-                    onClick={() => handleOpenMaterial(material.material_id)}
-                    className="flex items-center gap-3 rounded-md px-3 py-2 cursor-pointer hover:bg-gray-800 transition-colors"
+                    className="flex items-center gap-3 rounded-md px-3 py-2 hover:bg-gray-800 transition-colors group"
                   >
                     <FileTypeBadge fileType={material.file_type} />
-                    <span className="text-sm text-gray-300 truncate flex-1">
+                    <span
+                      onClick={() => handleOpenMaterial(material.material_id)}
+                      className="text-sm text-gray-300 truncate flex-1 cursor-pointer"
+                    >
                       {material.filename}
                     </span>
                     <div className="flex items-center gap-2 shrink-0">
@@ -94,6 +101,13 @@ export function MaterialLibrary({ weekMap, materials }: MaterialLibraryProps) {
                           Error
                         </span>
                       )}
+                      <button
+                        onClick={() => handleDeleteMaterial(material.material_id, onRefresh)}
+                        className="opacity-0 group-hover:opacity-100 text-gray-500 hover:text-red-400 transition-all text-xs px-1"
+                        title="Delete"
+                      >
+                        ✕
+                      </button>
                     </div>
                   </div>
                 ))

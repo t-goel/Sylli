@@ -107,6 +107,12 @@ def update_material_embed_status(material_id: str, embed_status: str):
     )
 
 
+def delete_material(material_id: str):
+    """Delete a material record from DynamoDB."""
+    table = dynamodb.Table(MATERIALS_TABLE_NAME)
+    table.delete_item(Key={"material_id": material_id})
+
+
 def list_materials_for_user(user_id: str) -> list[dict]:
     """List all materials for a user via user_id-index GSI, sorted by uploaded_at."""
     table = dynamodb.Table(MATERIALS_TABLE_NAME)

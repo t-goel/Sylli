@@ -7,7 +7,7 @@ from uuid import uuid4
 import boto3
 from botocore.config import Config
 
-from services.dynamo_service import store_material, get_material, update_material_week, update_material_embed_status
+from services.dynamo_service import store_material, get_material, update_material_week, update_material_embed_status, delete_material as _delete_material_record
 from services.bedrock_service import MODEL_ID
 
 MATERIALS_BUCKET = os.getenv("MATERIALS_BUCKET", "sylli-materials-bucket")
@@ -103,6 +103,19 @@ def confirm_material_week(material_id: str, user_id: str, week_number: int) -> d
 
     embed_status = "processing" if EMBED_FUNCTION_NAME else "pending"
     return {"material_id": material_id, "embed_status": embed_status}
+
+
+def delete_material(material_id: str, user_id: str) -> bool:
+    """Delete material from S3 (best-effort) and remove DynamoDB record. Returns False if not found/owned."""
+    item = get_material(material_id, user_id)
+    if item is None:
+        return False
+    try:
+        s3.delete_object(Bucket=MATERIALS_BUCKET, Key=item["s3_key"])
+    except Exception:
+        pass  # S3 object may already be gone (e.g. bucket cleared manually)
+    _delete_material_record(material_id)
+    return True
 
 
 def get_presigned_url(material_id: str, user_id: str) -> str | None:
