@@ -111,10 +111,19 @@ export function MaterialUpload({ syllabusId, weekMap, onMaterialUploaded }: Mate
       const initialStatus = confirmData.embed_status ?? "processing"
       setEmbedStatus(initialStatus)
 
-      // Only poll if embedding was actually triggered
-      if (initialStatus !== "processing") return
+      // Refresh the library immediately so the confirmed material appears
+      onMaterialUploaded()
 
-      // Start polling every 4000ms
+      // If no embedding triggered (local dev), clear the upload row after a moment
+      if (initialStatus !== "processing") {
+        setTimeout(() => {
+          setPendingMaterial(null)
+          setEmbedStatus(null)
+        }, 1500)
+        return
+      }
+
+      // Start polling every 4000ms until embed completes
       intervalRef.current = setInterval(async () => {
         const { apiFetch: apiFetchInner } = await import("@/lib/api")
         const statusRes = await apiFetchInner(`/api/v1/materials/${pendingMaterial.material_id}/status`)
@@ -124,13 +133,11 @@ export function MaterialUpload({ syllabusId, weekMap, onMaterialUploaded }: Mate
             clearInterval(intervalRef.current!)
             intervalRef.current = null
             setEmbedStatus(statusData.embed_status)
-            if (statusData.embed_status === "ready") {
-              onMaterialUploaded()
-              setTimeout(() => {
-                setPendingMaterial(null)
-                setEmbedStatus(null)
-              }, 2000)
-            }
+            onMaterialUploaded()
+            setTimeout(() => {
+              setPendingMaterial(null)
+              setEmbedStatus(null)
+            }, 2000)
           }
         }
       }, 4000)
