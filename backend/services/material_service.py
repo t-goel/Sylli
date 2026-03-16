@@ -90,11 +90,16 @@ def confirm_material_week(material_id: str, user_id: str, week_number: int) -> d
     # Trigger embedding asynchronously — fire and forget
     if EMBED_FUNCTION_NAME:
         payload = {"material_id": material_id, "user_id": user_id, "week_number": week_number}
-        lambda_client.invoke(
-            FunctionName=EMBED_FUNCTION_NAME,
-            InvocationType="Event",
-            Payload=json.dumps(payload),
-        )
+        try:
+            lambda_client.invoke(
+                FunctionName=EMBED_FUNCTION_NAME,
+                InvocationType="Event",
+                Payload=json.dumps(payload),
+            )
+        except Exception:
+            # Swallow invoke errors locally (function not deployed yet).
+            # embed_status stays 'processing'; worker sets it to 'ready'/'error' when deployed.
+            pass
 
     return {"material_id": material_id, "embed_status": "processing"}
 
