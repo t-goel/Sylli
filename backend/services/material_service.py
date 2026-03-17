@@ -112,15 +112,45 @@ def confirm_material_week(material_id: str, user_id: str, week_number: int) -> d
     return {"material_id": material_id, "embed_status": embed_status}
 
 
+def _delete_material_vectors(material_id: str) -> None:
+    """Delete all S3 Vector chunks for a material (best-effort)."""
+    from services.embedding_service import _get_s3v, VECTOR_BUCKET_NAME, VECTOR_INDEX_NAME
+    try:
+        s3v = _get_s3v()
+        prefix = f"{material_id}#chunk#"
+        keys = []
+        paginator_kwargs = dict(
+            vectorBucketName=VECTOR_BUCKET_NAME,
+            indexName=VECTOR_INDEX_NAME,
+            vectorKeyPrefix=prefix,
+        )
+        while True:
+            resp = s3v.list_vectors(**paginator_kwargs)
+            keys.extend(v["key"] for v in resp.get("vectors", []))
+            next_token = resp.get("nextToken")
+            if not next_token:
+                break
+            paginator_kwargs["nextToken"] = next_token
+        if keys:
+            s3v.delete_vectors(
+                vectorBucketName=VECTOR_BUCKET_NAME,
+                indexName=VECTOR_INDEX_NAME,
+                keys=keys,
+            )
+    except Exception:
+        pass  # vectors may already be gone or index not yet created
+
+
 def delete_material(material_id: str, user_id: str) -> bool:
-    """Delete material from S3 (best-effort) and remove DynamoDB record. Returns False if not found/owned."""
+    """Delete material from S3, vector index, and DynamoDB. Returns False if not found/owned."""
     item = get_material(material_id, user_id)
     if item is None:
         return False
     try:
         s3.delete_object(Bucket=MATERIALS_BUCKET, Key=item["s3_key"])
     except Exception:
-        pass  # S3 object may already be gone (e.g. bucket cleared manually)
+        pass  # S3 object may already be gone
+    _delete_material_vectors(material_id)
     _delete_material_record(material_id)
     return True
 
