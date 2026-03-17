@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Auth and Syllabus** - Gate data behind user accounts and deliver the first UI milestone (completed 2026-03-14)
 - [x] **Phase 3: Materials and Library** - Upload course materials with async embedding and display a chronological navigator (completed 2026-03-16)
 - [x] **Phase 4: AI Tutor** - RAG pipeline with week-aware context and inline source citations (completed 2026-03-16)
-- [ ] **Phase 5: Quiz Generator** - On-demand quiz generation scoped to a unit or the full course
+- [x] **Phase 5: Quiz Generator** - On-demand quiz generation scoped to a unit or the full course (completed 2026-03-17)
 
 ## Phase Details
 
@@ -115,4 +115,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Auth and Syllabus | 5/5 | Complete | 2026-03-14 |
 | 3. Materials and Library | 6/6 | Complete   | 2026-03-16 |
 | 4. AI Tutor | 5/5 | Complete   | 2026-03-16 |
-| 5. Quiz Generator | 2/3 | In Progress|  |
+| 5. Quiz Generator | 3/3 | Complete   | 2026-03-17 |
