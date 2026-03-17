@@ -67,6 +67,13 @@ export default function DashboardPage() {
     setWeekMap(parsed.week_map)
   }
 
+  function handleDeleteSuccess(materialId: string) {
+    // Remove the item from local state immediately. Do NOT call fetchMaterials() here —
+    // DynamoDB GSI eventual consistency means a re-fetch fired immediately after DELETE
+    // will still return the deleted item, overwriting the correct filtered state.
+    setMaterials((prev) => prev.filter((m) => m.material_id !== materialId))
+  }
+
   function handleLogout() {
     logout()
     router.replace("/login")
@@ -149,7 +156,7 @@ export default function DashboardPage() {
                 <MaterialLibrary
                   weekMap={weekMap}
                   materials={materials}
-                  onRefresh={fetchMaterials}
+                  onDeleteSuccess={handleDeleteSuccess}
                 />
               </section>
             </>

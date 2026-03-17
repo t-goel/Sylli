@@ -25,7 +25,7 @@ interface Material {
 interface MaterialLibraryProps {
   weekMap: WeekMap | null
   materials: Material[]
-  onRefresh: () => void
+  onDeleteSuccess: (materialId: string) => void
 }
 
 async function handleOpenMaterial(materialId: string) {
@@ -51,7 +51,7 @@ function FileTypeBadge({ fileType }: { fileType: "pdf" | "pptx" }) {
   )
 }
 
-export function MaterialLibrary({ weekMap, materials, onRefresh }: MaterialLibraryProps) {
+export function MaterialLibrary({ weekMap, materials, onDeleteSuccess }: MaterialLibraryProps) {
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const [deleteError, setDeleteError] = useState<string | null>(null)
 
@@ -66,7 +66,7 @@ export function MaterialLibrary({ weekMap, materials, onRefresh }: MaterialLibra
         setDeleteError(body.detail ?? "Delete failed — please try again")
         return
       }
-      await onRefresh()                       // await so list updates after DELETE commits
+      onDeleteSuccess(materialId)              // optimistic removal — avoids DynamoDB GSI lag
     } finally {
       setDeletingId(null)
     }
